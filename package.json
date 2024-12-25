@@ -1,0 +1,35 @@
+{
+  "name": "funcify",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "bin": {
+    "funcify": "cmd.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sahiiil1406/Funcify.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sahiiil1406/Funcify/issues"
+  },
+  "homepage": "https://github.com/Sahiiil1406/Funcify#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dockerode": "^4.0.2",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.9.2",
+    "uuid": "^11.0.3"
+  }
+}
