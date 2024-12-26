@@ -9,7 +9,7 @@
     "dev": "nodemon index.js"
   },
   "bin": {
-    "funcify": "cmd.js"
+    "funcify": "cli/index.js"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/Sahiiil1406/Funcify#readme",
   "dependencies": {
+    "axios": "^1.7.9",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dockerode": "^4.0.2",

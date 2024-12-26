@@ -1,10 +1,10 @@
-#!/root/.nvm/versions/node/v20.18.1/bin/node
+
 const fs = require('fs');
 const path = require('path');
 const uuid = require('uuid');
 
 
-const copyFolderOrFileToCode = (sourcePath) => {
+const copyFolderOrFileToCode = (sourcePath,token) => {
     const random = uuid.v4().slice(0, 6);
     const destinationPath = path.join(`./code/${random}`);
 
@@ -43,16 +43,7 @@ const copyFolderOrFileToCode = (sourcePath) => {
     }
 };
 
-// Get the path from command-line arguments and execute the function
-if (process.argv.length < 3) {
-    console.error('Please provide a file or folder path as an argument.');
-    process.exit(1);
-}
 
-const sourcePath = process.argv[2];
-if (!fs.existsSync(sourcePath)) {
-    console.error(`The provided path "${sourcePath}" does not exist.`);
-    process.exit(1);
+module.exports={
+    copyFolderOrFileToCode
 }
-
-copyFolderOrFileToCode(sourcePath);
