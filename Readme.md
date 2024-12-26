@@ -16,6 +16,9 @@ Funcify is a lightweight Function-as-a-Service (FaaS) platform that allows you t
 
 ## Architecture
 
+![Screenshot 2024-12-26 223229](https://github.com/user-attachments/assets/aa194e3b-5371-4969-85d9-0af5ae863842)
+
+
 1. **Users**: 
    - Users interact with the platform using a CLI or direct API calls.
 
