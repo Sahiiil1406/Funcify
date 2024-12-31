@@ -5,7 +5,7 @@ const cors=require('cors');
 const userRoutes=require('./routes/user.routes.js');
 const functionRoutes=require('./routes/function.routes.js')
 const cookieParser=require('cookie-parser')
-
+const {runFunction}=require('./controllers/runner.js')
 
 const app=express();
 //middleware
@@ -17,6 +17,7 @@ app.use(cookieParser());
 //routes
 app.use('/user',userRoutes);
 app.use('/func',functionRoutes)
+app.post('/invoke/:id',runFunction);
 
 
 const connectDb=async ()=>{

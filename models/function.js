@@ -11,7 +11,7 @@ const functionSchema = new mongoose.Schema({
     environment:{
         type:String,
         required:true,
-        enum:['nodejs','python']
+        enum:['node:18-alpine','python']
     },
     userId:{
         type:mongoose.Types.ObjectId,
