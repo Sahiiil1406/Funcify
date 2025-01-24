@@ -1,11 +1,12 @@
 const axios=require('axios')
-const deployFunction=async(id,token)=>{
+const deployFunction=async(id)=>{
     try {
         const res=await axios.post(URL,{
 
         })
         return res.json({
-            msg:"Deployed Succesfully"
+            msg:"Deployed Succesfully",
+            "url":res.data.url
         })
     } catch (error) {
         console.log(error)

@@ -1,5 +1,5 @@
 const add=(a,b,c)=>{
-    return a+b+c;
+    return a-b+c;
 
 }
 const envd=process.env.PAYLOAD;

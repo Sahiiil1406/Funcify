@@ -1,27 +1,35 @@
 const Docker = require('dockerode');
 const path = require('path');
-const Function=require('../models/function.js')
+const Function = require('../models/function.js');
 const docker = new Docker();
 
-const envToCmd={
-    "node:18-alpine":["node", "main.js"],
-    "python":["python","main.py"]
-}
-const runFunction = async (req,res) => {
+const envToCmd = {
+    "node:alpine": ["node", "main.js"],
+    "python": ["python", "main.py"]
+};
+
+const runFunction = async (req, res) => {
     try {
-        const {id}=req.params;
-        const func=await Function.findById(id)
+        // const {id}=req.params;
+        // const func = await Function.findById(id);
+        const func = {
+            uuid: "abc",
+            environment: "node:alpine"
+        };
+        //console.log('Function:', func);
+
         const payload = req.body;
         const hostPath = path.resolve(`/root/projects/Funcify/code/${func.uuid}`);
+        //console.log('Environment:', func.environment);
 
         // Create the container
         const container = await docker.createContainer({
-            Image: func.environment, // The Docker image
-            Cmd: envToCmd.func.environment, // Command to execute
+            Image: `${func.environment}`, // Docker image
+            Cmd: envToCmd[func.environment] || ["node", "main.js"], // Command to execute based on environment
             Env: [`PAYLOAD=${JSON.stringify(payload)}`], // Pass the payload as an environment variable
             HostConfig: {
                 Binds: [`${hostPath}:/usr/src/app`], // Bind the host directory to the container
-                AutoRemove: true // Automatically remove container after it exits
+                AutoRemove: true // Automatically remove the container after it exits
             },
             WorkingDir: "/usr/src/app" // Set the working directory inside the container
         });
@@ -42,16 +50,29 @@ const runFunction = async (req,res) => {
             logOutput += chunk.toString('utf-8');
         });
 
-        // Listen for the end of logs
+        // Handle log stream 'end' event
         logStream.on('end', () => {
-            console.log(`Container Output:\n${logOutput.trim()}`);
-            res.send(logOutput.trim())
+            if (logOutput.trim()) {
+                // Send logs back as the response
+                res.status(200).send({ output: String(logOutput) });
+            } else {
+                // In case no logs, send a generic response
+                res.status(200).send({ output: "No output returned from the function." });
+            }
+        });
+
+        // Handle any stream errors
+        logStream.on('error', (err) => {
+            console.error("Log stream error:", err);
+            res.status(500).send({ error: "Error fetching container logs" });
         });
 
     } catch (error) {
         console.error("Error running container:", error);
+        res.status(500).send({ error: "Error running the container" });
     }
 };
-module.exports={
+
+module.exports = {
     runFunction
-}
+};

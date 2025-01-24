@@ -22,7 +22,7 @@ async function main() {
         case 'Login':
             const { username, email } = await inquirer.prompt([
                 { type: 'input', name: 'email', message: 'Enter your email:' },
-                { type: 'input', name: 'password', message: 'Enter your password:' },
+                { type: 'input', name: 'password', message: 'Enter your email:' },
             ]);
             token =await authCli(username, email).token;
             break;
