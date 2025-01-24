@@ -5,7 +5,7 @@ const docker = new Docker();
 
 const envToCmd = {
     "node:alpine": ["node", "main.js"],
-    "python": ["python", "main.py"]
+    "python:alpine": ["python", "main.py"]
 };
 
 const runFunction = async (req, res) => {
@@ -13,8 +13,8 @@ const runFunction = async (req, res) => {
         // const {id}=req.params;
         // const func = await Function.findById(id);
         const func = {
-            uuid: "abc",
-            environment: "node:alpine"
+            uuid: "hgj",
+            environment: "python:alpine"
         };
         //console.log('Function:', func);
 
@@ -54,7 +54,8 @@ const runFunction = async (req, res) => {
         logStream.on('end', () => {
             if (logOutput.trim()) {
                 // Send logs back as the response
-                res.status(200).send({ output: String(logOutput) });
+                const cleanedOutput=logOutput.replace(/[\x00-\x1F\x7F]/g, '');
+                res.status(200).send({ output: String(cleanedOutput) });
             } else {
                 // In case no logs, send a generic response
                 res.status(200).send({ output: "No output returned from the function." });
